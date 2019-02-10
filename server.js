@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+
+const Passport = require('./api/middlewares/passport');
 
 const auth = require('./api/routes/Auth');
 
@@ -19,6 +22,9 @@ mongoose.connect(process.env.MONGO_URL, {
     console.log(err);
   }
 });
+
+app.use(passport.initialize());
+Passport(passport);
 
 app.use(auth);
 
