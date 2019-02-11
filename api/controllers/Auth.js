@@ -56,7 +56,7 @@ exports.register = async (req, res) => {
   try {
     userCreated = await Promise.all([newAccount.save(), newUser.save()]);
   } catch (error) {
-    console.log(error);
+    await Account.findOneAndDelete({ email: req.body.email });
     errors.error = errors.message;
     return res.status(500).json(errors);
   }
@@ -119,3 +119,14 @@ exports.login = async (req, res) => {
     });
   });
 };
+
+exports.loginFacebook = (req, res) => {
+  console.log(req.user);
+  return res.status(200).json({
+    message: 'success',
+  });
+};
+
+exports.loginSocialFailed = (req, res) => res.status(400).json({
+  error: 'Don\'t login with social account',
+});

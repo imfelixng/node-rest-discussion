@@ -12,6 +12,10 @@ const AccountSchema = new Schema({
     required: true,
     minlength: 6,
   },
+  type: {
+    type: String,
+    default: 'basic',
+  },
   role: {
     type: Number,
     required: true,

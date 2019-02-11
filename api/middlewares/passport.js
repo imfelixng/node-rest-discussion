@@ -1,7 +1,7 @@
 const JWTStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 
-const User = require('../models/Account');
+const Account = require('../models/Account');
 
 const opts = {};
 
@@ -10,16 +10,16 @@ opts.secretOrKey = process.env.JWT_KEY;
 
 module.exports = (passport) => {
   passport.use(new JWTStrategy(opts, async (jwtPayload, done) => {
-    let user = null;
+    let account = null;
     try {
-      user = await User.findById(jwtPayload.id);
+      account = await Account.findById(jwtPayload.id);
     } catch (error) {
       console.log(error);
     }
 
-    if (!user) {
+    if (!account) {
       return done(null, false);
     }
-    return done(null, user);
+    return done(null, account);
   }));
 };

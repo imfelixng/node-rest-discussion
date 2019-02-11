@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const Passport = require('./api/middlewares/passport');
+const PassportFacebook = require('./api/middlewares/passport-facebook');
 
 const auth = require('./api/routes/Auth');
 
@@ -25,6 +26,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 app.use(passport.initialize());
 Passport(passport);
+PassportFacebook(passport);
 
 app.use(auth);
 
